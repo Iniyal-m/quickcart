@@ -1,15 +1,15 @@
 import Header from "./components/Header";
-import ProductList from "./components/ProductList";
-import CartSidebar from "./components/CartSidebar";
+import HomePage from "./components/HomePage";
+import CartPage from "./components/CartPage";
 import "./styles/App.css";
 import { useState } from "react";
+import { Routes, Route, useNavigate } from "react-router-dom";
 
 function App() {
-  // ✅ State
   const [cart, setCart] = useState([]);
-  const [isCartOpen, setIsCartOpen] = useState(false);
+  const navigate = useNavigate();
 
-  // ✅ Add to Cart
+  // Add to Cart
   const addToCart = (product) => {
     const existing = cart.find(item => item.id === product.id);
 
@@ -26,7 +26,7 @@ function App() {
     }
   };
 
-  // ✅ Increase
+  // Increase
   const increaseQty = (id) => {
     setCart(
       cart.map(item =>
@@ -37,7 +37,7 @@ function App() {
     );
   };
 
-  // ✅ Decrease
+  // Decrease
   const decreaseQty = (id) => {
     setCart(
       cart
@@ -50,7 +50,7 @@ function App() {
     );
   };
 
-  // ✅ Remove
+  // Remove
   const removeItem = (id) => {
     setCart(cart.filter(item => item.id !== id));
   };
@@ -59,19 +59,23 @@ function App() {
     <div>
       <Header
         count={cart.length}
-        onCartClick={() => setIsCartOpen(true)}
+        onCartClick={() => navigate("/cart")}
       />
 
-      <ProductList onAddToCart={addToCart} />
-
-      <CartSidebar
-        cart={cart}
-        isOpen={isCartOpen}
-        onClose={() => setIsCartOpen(false)}
-        onIncrease={increaseQty}
-        onDecrease={decreaseQty}
-        onRemove={removeItem}
-      />
+      <Routes>
+        <Route path="/" element={<HomePage onAddToCart={addToCart} />} />
+        <Route
+          path="/cart"
+          element={
+            <CartPage
+              cart={cart}
+              onIncrease={increaseQty}
+              onDecrease={decreaseQty}
+              onRemove={removeItem}
+            />
+          }
+        />
+      </Routes>
     </div>
   );
 }
