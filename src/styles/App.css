@@ -38,3 +38,17 @@ h1 {
 .card p {
   margin: 5px 0;
 }
+.cart-sidebar {
+  position: fixed;
+  right: 0;
+  top: 0;
+  width: 250px;
+  height: 100%;
+  background: white;
+  padding: 20px;
+  box-shadow: -2px 0 10px rgba(0,0,0,0.2);
+}
+.cart-sidebar button {
+  margin: 5px;
+  padding: 5px 10px;
+}
